@@ -4,6 +4,8 @@ import time
 import socket
 import warnings
 import xml.etree.ElementTree as ET
+import argparse, os
+import subprocess as sp
 
 """ Function to ping and ensure the internet is available """
 def internet_on():
@@ -27,6 +29,11 @@ def retData(fileXml):
             return(child.text)
                 
 """ Core functionality """
+# Parse command line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('-c', '--command', help='command string (Recommend using single quote)')
+args = parser.parse_args()
+
 # Ignore warnings (there are few SSL related ones)
 warnings.filterwarnings('ignore')
 # Set number of mins for timeout
@@ -46,9 +53,12 @@ while not internet_on():
 if internet_on():
     slack = Slacker(retData('custom.xml'))
     
-    # Execute command
-    
-
-    # Send command via slackbot
-    slack.chat.post_message('informer','Completed execution of command') 
+    if not (args.command==None):
+        # Execute command
+        if (not sp.call(args.command, shell=True) == True):    
+            # Send command via slackbot
+            slack.chat.post_message('informer','Completed execution of command ' + args.command) 
+        else:
+            # Send command via slackbot
+            slack.chat.post_message('informer','Couldn\'t complete execution of command ' + args.command) 
 

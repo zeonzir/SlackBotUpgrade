@@ -1,0 +1,5 @@
+slacker==0.9.24
+urllib2
+time
+socket
+warnings
