@@ -14,3 +14,5 @@
 8. Subprocess
 
 ##TO DO:
+1. Add logging feature to default directory (use relative paths)
+2. Combine logging with stdout display
