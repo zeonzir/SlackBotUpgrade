@@ -37,8 +37,19 @@ def handleCmd(cmd):
     
     proc = Popen(args, stdout=PIPE, stderr=PIPE)
     out, err = proc.communicate()
+
+    if "Waiting for existing lock by process" in out:
+
+        while("Waiting for existing lock by process" in out):
+            args = shlex.split('clear; rm -rf /z/madantrg/.theano/compiledir_Linux-3.13--generic-x86_64-with-Ubuntu-14.04-trusty-x86_64-2.7.6-64/lock_dir/')
+            proc = Popen(args, stdout=PIPE, stderr=PIPE)
+            out, err = proc.communicate()
+    
+    args = shlex.split(cmd)
+    proc = Popen(args, stdout=PIPE, stderr=PIPE)
+    out, err = proc.communicate()
+
     exitcode = proc.returncode
-    import pdb; pdb.set_trace()
     return exitcode
 
                 
