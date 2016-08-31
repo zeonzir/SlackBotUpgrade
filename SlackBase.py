@@ -5,7 +5,8 @@ import socket
 import warnings
 import xml.etree.ElementTree as ET
 import argparse, os
-import subprocess as sp
+from subprocess import Popen, PIPE
+import shlex
 
 """ Function to ping and ensure the internet is available """
 def internet_on():
@@ -27,6 +28,19 @@ def retData(fileXml):
     for child in root:
         if child.tag == "apitoken":
             return(child.text)
+
+""" Function to handle command execution and simple responses """
+def handleCmd(cmd):
+    
+    # Split commmand into shell-like format
+    args = shlex.split(cmd)
+    
+    proc = Popen(args, stdout=PIPE, stderr=PIPE)
+    out, err = proc.communicate()
+    exitcode = proc.returncode
+    import pdb; pdb.set_trace()
+    return exitcode
+
                 
 """ Core functionality """
 # Parse command line arguments
@@ -55,7 +69,7 @@ if internet_on():
     
     if not (args.command==None):
         # Execute command
-        if (not sp.call(args.command, shell=True) == True):    
+        if (not handleCmd(args.command)):    
             # Send command via slackbot
             slack.chat.post_message('informer','Completed execution of command ' + args.command) 
         else:

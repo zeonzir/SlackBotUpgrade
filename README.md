@@ -12,6 +12,7 @@
 6. warnings
 7. xml.etree.ElementTree 
 8. Subprocess
+9. shlex
 
 ##TO DO:
 1. Add logging feature to default directory (use relative paths)
