@@ -12,7 +12,7 @@
 6. warnings
 7. xml.etree.ElementTree 
 8. Subprocess
-9. shlex
+9. shlex (http://stackoverflow.com/questions/1996518/retrieving-the-output-of-subprocess-call)  
 
 ##TO DO:
 1. Add logging feature to default directory (use relative paths)
